@@ -67,3 +67,88 @@
     </form>
   </div>
 </div>
+<script>
+    const form = document.getElementById('registrationForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    function validateName(){
+        const nameValue=nameInput.value.trim();
+        if(nameValue===''){
+            nameError.textContent='Name is required';
+            return false;
+        }
+        else{
+            nameError.textContent='';
+            return true;
+        }
+    }
+function validateEmail(){
+    const emailValue=emailInput.value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailPattern.test(emailValue)){
+        emailError.textContent=" please enter a valid Email";
+        return false;
+    }
+    else{
+        emailError.textContent='';
+        return true;
+    }
+
+}
+function validatePassword(){
+    const passwordValue=passwordInput.value.trim();
+    if(passwordValue.length<6){
+        passwordError.textContent="Password must be at least 8 characters";
+        return false;
+    }
+    else{
+        passwordError.textContent='';
+        return true;
+    }
+}
+function toggleSubmitButton(){
+    if (validateName() && validateEmail() && validatePassword()){
+        submitBtn.disabled=false;
+    }
+    else{
+        submitBtn.disabled=true;
+    }
+}
+nameInput.addEventListener('input',(e)=>{
+    validateName();
+    toggleSubmitButton();
+});
+emailInput.addEventListener('input',(e)=>{
+    validateEmail();
+    toggleSubmitButton();
+});
+passwordInput.addEventListener('input',(e)=>{
+    validatePassword();
+    toggleSubmitButton();
+});
+form.addEventListener('submit',(e)=>{
+
+    e.preventDefault();
+    if(validateName() && validateEmail() && validatePassword()){
+    alert('Form Submitted');
+    form.reset();
+    submitBtn.disabled=true;
+    }
+    else{
+        alert('Please fill the form correctly');
+    }
+
+});
+
+
+
+
+</script>
+</body>
+</html>
